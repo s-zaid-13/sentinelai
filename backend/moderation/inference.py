@@ -13,6 +13,7 @@ import tensorflow as tf
 
 _model = None
 _thresholds = None
+_tokenizer = None  # NEW: cache tokenizer too, same pattern as model
 
 HF_REPO_ID = os.getenv("HF_MODEL_REPO", "samamazaid/sentinelai-distilbert")
 
@@ -53,8 +54,12 @@ def ensure_model_downloaded():
 def get_model():
     global _model
     if _model is None:
+        print(
+            "Loading TensorFlow SavedModel into memory..."
+        )  # NEW: visibility in boot logs
         ensure_model_downloaded()
         _model = tf.saved_model.load(settings.MODEL_PATH)
+        print("Model loaded.")  # NEW
     return _model
 
 
@@ -67,12 +72,33 @@ def get_thresholds():
     return _thresholds
 
 
+def get_cached_tokenizer():  # NEW FUNCTION: reuse tokenizer instead of reloading every call
+    global _tokenizer
+    if _tokenizer is None:
+        from src.data.preprocess import get_tokenizer
+
+        print("Loading tokenizer...")
+        _tokenizer = get_tokenizer()
+        print("Tokenizer loaded.")
+    return _tokenizer
+
+
+def preload():  # NEW FUNCTION: single entrypoint for apps.py to call at worker boot
+    """Called once at worker startup (via apps.py ready()) so the first
+    real request doesn't pay the full load cost and risk timing out."""
+    get_model()
+    get_thresholds()
+    get_cached_tokenizer()
+
+
 def predict(text: str) -> dict:
-    from src.data.preprocess import clean_text, get_tokenizer
+    from src.data.preprocess import clean_text
     from src.utils.config import MAX_SEQ_LENGTH
 
     cleaned = clean_text(text)
-    tokenizer = get_tokenizer()
+    tokenizer = (
+        get_cached_tokenizer()
+    )  # CHANGED: was get_tokenizer() directly, now cached
     model = get_model()
 
     enc = tokenizer(
