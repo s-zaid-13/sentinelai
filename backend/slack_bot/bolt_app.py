@@ -45,7 +45,7 @@ def process_message_event(body, client):
                 "message_ts": message_ts,
                 "text": text,
             },
-            timeout=10,
+            timeout=90,
         )
         response.raise_for_status()
         result = response.json()
@@ -57,10 +57,14 @@ def process_message_event(body, client):
     scores = result["scores"]
 
     if action == "flag":
-        alert_admin(client, settings.SLACK_ADMIN_CHANNEL_ID, user_id, channel_id, text, scores)
+        alert_admin(
+            client, settings.SLACK_ADMIN_CHANNEL_ID, user_id, channel_id, text, scores
+        )
     elif action == "flag_high":
         warn_user(client, user_id, channel_id, scores)
-        alert_admin(client, settings.SLACK_ADMIN_CHANNEL_ID, user_id, channel_id, text, scores)
+        alert_admin(
+            client, settings.SLACK_ADMIN_CHANNEL_ID, user_id, channel_id, text, scores
+        )
 
 
 app.event("message")(ack=ack_immediately, lazy=[process_message_event])
