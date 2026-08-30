@@ -2,7 +2,6 @@ import re
 import numpy as np
 import tensorflow as tf
 import pandas as pd
-from transformers import AutoTokenizer
 
 from src.utils.config import (
     TRAIN_CSV,
@@ -22,6 +21,8 @@ _tokenizer = None
 def get_tokenizer():
     global _tokenizer
     if _tokenizer is None:
+        from transformers import AutoTokenizer
+
         _tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_MODEL)
     return _tokenizer
 

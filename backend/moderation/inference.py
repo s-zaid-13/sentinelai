@@ -8,12 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import numpy as np
-import tensorflow as tf
 from django.conf import settings
-from huggingface_hub import snapshot_download
-
-from src.data.preprocess import clean_text, get_tokenizer
-from src.utils.config import MAX_SEQ_LENGTH
 
 _model = None
 _thresholds = None
@@ -23,6 +18,8 @@ HF_REPO_ID = os.getenv("HF_MODEL_REPO", "samamazaid/sentinelai-distilbert")
 
 def ensure_model_downloaded():
     """Download model + thresholds from Hugging Face Hub if not present locally."""
+    from huggingface_hub import snapshot_download
+
     model_dir = Path(settings.MODEL_PATH)
     thresholds_path = Path(settings.THRESHOLDS_PATH)
 
@@ -70,6 +67,10 @@ def get_thresholds():
 
 
 def predict(text: str) -> dict:
+    import tensorflow as tf
+    from src.data.preprocess import clean_text, get_tokenizer
+    from src.utils.config import MAX_SEQ_LENGTH
+
     cleaned = clean_text(text)
     tokenizer = get_tokenizer()
     model = get_model()
