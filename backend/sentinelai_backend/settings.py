@@ -161,7 +161,7 @@ DJANGO_API_URL = os.getenv("DJANGO_API_URL", "http://localhost:8000/api")
 
 BENCHMARK_REPORT_PATH = os.path.join(BASE_DIR.parent, "docs", "benchmark_report.json")
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3001", "https://sentinelai-olive.vercel.app"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3001", "https://sentinelai-three.vercel.app"]
 
 THRESHOLDS_PATH = os.path.join(BASE_DIR.parent, "models", "thresholds.json")
 HIGH_CONFIDENCE_LABELS = ["severe_toxic", "threat", "identity_hate"]
