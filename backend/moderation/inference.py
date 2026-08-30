@@ -87,8 +87,6 @@ def preload():  # NEW FUNCTION: single entrypoint for apps.py to call at worker 
     """Called once at worker startup (via apps.py ready()) so the first
     real request doesn't pay the full load cost and risk timing out."""
     get_model()
-    get_thresholds()
-    get_cached_tokenizer()
 
 
 def predict(text: str) -> dict:
