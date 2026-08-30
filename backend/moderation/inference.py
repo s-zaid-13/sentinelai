@@ -9,6 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import numpy as np
 from django.conf import settings
+import tensorflow as tf
 
 _model = None
 _thresholds = None
@@ -67,7 +68,6 @@ def get_thresholds():
 
 
 def predict(text: str) -> dict:
-    import tensorflow as tf
     from src.data.preprocess import clean_text, get_tokenizer
     from src.utils.config import MAX_SEQ_LENGTH
 
