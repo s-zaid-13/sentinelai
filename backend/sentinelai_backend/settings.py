@@ -166,5 +166,11 @@ CORS_ALLOWED_ORIGINS = [
     "https://sentinel-ai-dashboard-preview.netlify.app",
 ]
 
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "ngrok-skip-browser-warning",
+]
+
 THRESHOLDS_PATH = os.path.join(BASE_DIR.parent, "models", "thresholds.json")
 HIGH_CONFIDENCE_LABELS = ["severe_toxic", "threat", "identity_hate"]

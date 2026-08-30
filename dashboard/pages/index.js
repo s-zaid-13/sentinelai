@@ -17,7 +17,11 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get(`${API_URL}/stats/`)
+        const isNgrok = API_URL.includes("ngrok");
+        const axiosConfig = isNgrok
+          ? { headers: { "ngrok-skip-browser-warning": "true" } }
+          : {};
+        const res = await axios.get(`${API_URL}/stats/`, axiosConfig)
         setStats(res.data)
         setError(null)
       } catch (err) {
