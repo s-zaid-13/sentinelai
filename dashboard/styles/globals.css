@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-display-raw), sans-serif;
+  --font-body: var(--font-body-raw), sans-serif;
+  --font-mono: var(--font-mono-raw), monospace;
+
+  --color-ink: #0a0f1c;
+  --color-surface: #121a2c;
+  --color-surface-2: #182338;
+  --color-line: #232f49;
+  --color-text: #edf1f9;
+  --color-text-dim: #8d97b3;
+  --color-text-faint: #5b6584;
+  --color-cyan: #2dd4ee;
+  --color-emerald: #35d399;
+  --color-amber: #f5b94d;
+  --color-rose: #f76e7c;
+}
+
+:root {
+  --background: var(--color-ink);
+  --foreground: var(--color-text);
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: var(--color-cyan);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.pulse-dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--color-emerald);
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot::before {
+    animation: none;
+    display: none;
+  }
+}

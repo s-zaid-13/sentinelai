@@ -1,0 +1,68 @@
+{
+  "sample_size": 100,
+  "results": [
+    {
+      "model": "Fine-tuned DistilBERT (local)",
+      "macro_f1": 0.5973,
+      "avg_latency": 0.1807
+    },
+    {
+      "model": "Gemini 2.5 Flash",
+      "macro_f1": 0.037,
+      "avg_latency": 0.2774
+    },
+    {
+      "model": "Qwen/Qwen3.6-27B",
+      "macro_f1": 0.2343,
+      "avg_latency": 1.5511
+    }
+  ],
+  "per_class": {
+    "toxic": {
+      "distilbert": 0.673,
+      "gemini": 0.222,
+      "groq": 0.462
+    },
+    "severe_toxic": {
+      "distilbert": 0.358,
+      "gemini": 0.0,
+      "groq": 0.0
+    },
+    "obscene": {
+      "distilbert": 0.7,
+      "gemini": 0.0,
+      "groq": 0.444
+    },
+    "threat": {
+      "distilbert": 0.526,
+      "gemini": 0.0,
+      "groq": 0.0
+    },
+    "insult": {
+      "distilbert": 0.693,
+      "gemini": 0.0,
+      "groq": 0.5
+    },
+    "identity_hate": {
+      "distilbert": 0.634,
+      "gemini": 0.0,
+      "groq": 0.0
+    }
+  },
+  "observations": {
+    "best_model": "Fine-tuned DistilBERT (local)",
+    "best_macro_f1": 0.5973,
+    "best_latency": 0.1807,
+    "llm_models": [
+      "Gemini 2.5 Flash",
+      "Qwen/Qwen3.6-27B"
+    ],
+    "cache_enabled": true,
+    "rate_limit_retry_enabled": true
+  },
+  "conclusion": {
+    "primary_model": "Fine-tuned DistilBERT (local)",
+    "reason": "Highest Macro-F1 and lowest average latency in the benchmark sample.",
+    "benchmark_sample_size": 100
+  }
+}

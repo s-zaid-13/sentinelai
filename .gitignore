@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+*.egg-info/
+
+# Env files — never commit real secrets
+.env
+backend/.env
+dashboard/.env.local
+dashboard/.env*.local
+
+# Django
+backend/db.sqlite3
+backend/staticfiles/
+backend/media/
+backend/*.log
+
+# Next.js
+dashboard/node_modules/
+dashboard/.next/
+dashboard/.vercel/
+dashboard/npm-debug.log*
+dashboard/out/
+
+# Jupyter
+notebooks/.ipynb_checkpoints/
+
+# Training data — large, re-downloadable via Kaggle CLI (see README)
+data/raw/
+data/processed/
+
+# Training checkpoint — retraining-only, backend never loads this
+models/distilbert_checkpoint.weights.h5
+
+# Exported model — hosted on Hugging Face Hub, downloaded at runtime (see README)
+models/saved_model/
+
+# LLM benchmark cache — local dev speed-up only
+docs/llm_cache/
+
+# OS
+.DS_Store
+Thumbs.db
